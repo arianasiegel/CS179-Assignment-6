@@ -1,0 +1,45 @@
+<!--type HTML then press CONTROL and SPACE-->
+
+<!-- because geolocation is blocked by chrome (ok for safari and other browsers), I typed into the command line: python3 -m http.server 8000) -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- link to jquery-->
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="sticktest.css">
+
+	<title>geolocatin' your way thru da city</title>
+	<script type="text/javascript">
+		window.onload = function(){
+			function printPosition(position){
+				var div = document.createElement("div");
+				$.getJSON(
+					"http://api.openweathermap.org/data/2.5/weather?", 
+					{lat: position.coords.latitude, lon: position.coords.longitude, appid: "44db6a862fba0b067b1930da0d769e98"},
+					function(data){
+					div.innerHTML = data.weather[0].main + ", " + data.weather[0].description + ", " + Math.round((data.main.temp - 273.15)* 1.8 + 32) + "&deg;F";
+					document.body.appendChild(div);
+					console.log(position);
+					console.log(data);
+					}
+					);
+			}
+			navigator.geolocation.getCurrentPosition(printPosition);
+			// http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=44db6a862fba0b067b1930da0d769e98 
+
+
+		};
+
+	</script>
+</head>
+<body>
+
+</body>
+
+</html>
+
+
+<!-- next steps: display weather information in the webpage (DOM)-->
+
